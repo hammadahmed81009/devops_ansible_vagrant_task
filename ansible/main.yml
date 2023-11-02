@@ -1,0 +1,13 @@
+---
+- hosts: web
+  roles:
+    - role: hammad.spectre_web
+
+- hosts: android
+  roles:
+    - role: ibrahim.spectre_android
+
+- hosts: api
+  roles:
+    - role: saim.spectre_api
+
