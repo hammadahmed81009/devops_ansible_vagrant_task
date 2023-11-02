@@ -1,6 +1,6 @@
 ---
 - name: Install Spectre Android on Ubuntu
-  hosts: your_target_server_ip
+  hosts: spectre_android
   become: yes
   tasks:
     - name: Update package cache
