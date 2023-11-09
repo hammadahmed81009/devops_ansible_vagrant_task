@@ -1,30 +1,28 @@
-# Vagrantfile
-
 Vagrant.configure("2") do |config|
+  # Configuration for the 'web' machine
+  config.vm.define "web" do |web|
+    web.vm.box = "generic/ubuntu2004"
+    web.vm.provider "libvirt" do |libvirt|
+      libvirt.driver = "kvm"
+      libvirt.machine_type = "q35"
+    end
+  end
 
-  # Common VM settings
-  config.vm.box = "ubuntu/bionic64"
+  # Configuration for the 'android' machine
+  config.vm.define "android" do |android|
+    android.vm.box = "generic/ubuntu2004"
+    android.vm.provider "libvirt" do |libvirt|
+      libvirt.driver = "kvm"
+      libvirt.machine_type = "q35"
+    end
+  end
 
-  # Define your VMs with specific roles
-  vm_definitions = [
-    { name: "spectre_web", role: "web", ip: "192.168.33.11" },
-    { name: "spectre_android", role: "android", ip: "192.168.33.12" },
-    { name: "spectre_api", role: "api", ip: "192.168.33.13" }
-  ]
-
-  vm_definitions.each do |vm_def|
-    config.vm.define vm_def[:name] do |vm|
-      vm.vm.hostname = "spectre-#{vm_def[:role]}-server"
-      vm.vm.network "private_network", type: "static", ip: vm_def[:ip]
-      vm.vm.provision "ansible" do |ansible|
-        ansible.playbook = "ansible/main.yml"
-        ansible.groups = {
-          "web" => [vm.name] if vm_def[:role] == "web",
-          "android" => [vm.name] if vm_def[:role] == "android",
-          "api" => [vm.name] if vm_def[:role] == "api"
-        }
-      end
+  # Configuration for the 'api' machine
+  config.vm.define "api" do |api|
+    api.vm.box = "generic/ubuntu2004"
+    api.vm.provider "libvirt" do |libvirt|
+      libvirt.driver = "kvm"
+      libvirt.machine_type = "q35"
     end
   end
 end
-
