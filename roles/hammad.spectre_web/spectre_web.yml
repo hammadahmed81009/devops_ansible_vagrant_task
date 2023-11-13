@@ -7,13 +7,13 @@
     - name: Update the system packages
       apt:
         update_cache: yes
-      when: ansible_os_family == 'Debian'
+      when: ansible_os_family == 'Ubuntu'
 
     - name: Install Git
       package:
         name: git
         state: present
-      when: ansible_os_family == 'Debian'
+      when: ansible_os_family == 'Ubuntu'
 
     - name: Clone Spectre Web GitLab Repo
       git:
